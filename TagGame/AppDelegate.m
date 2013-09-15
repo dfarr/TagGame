@@ -7,15 +7,30 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [Parse setApplicationId:@"trQnTQWDYbjHUP65V8ORXq4nU1A6mJx0v7fKKanE"
+                  clientKey:@"MHVg1NekWgTgofs4QR0jZ3y9lfsEbSl4qnBJ1xZJ"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    // for the parse facebook library
+    [PFFacebookUtils initializeFacebook];
+    
+    // for the facebook sdk views
+    [FBLoginView class];
+    
     return YES;
 }
-							
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
